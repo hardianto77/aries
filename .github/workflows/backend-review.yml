@@ -108,21 +108,21 @@ jobs:
         run: npm run build:api
 
       - name: Upload data-provider build
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: build-data-provider
           path: packages/data-provider/dist
           retention-days: 2
 
       - name: Upload data-schemas build
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: build-data-schemas
           path: packages/data-schemas/dist
           retention-days: 2
 
       - name: Upload api build
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: build-api
           path: packages/api/dist
@@ -470,7 +470,7 @@ jobs:
       - name: Upload Jest results
         if: ${{ !cancelled() }}
         continue-on-error: true
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: jest-results-api-${{ matrix.shard }}
           path: jest-results/
@@ -555,7 +555,7 @@ jobs:
       - name: Upload Jest results
         if: ${{ !cancelled() }}
         continue-on-error: true
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: jest-results-data-provider
           path: jest-results/
@@ -646,7 +646,7 @@ jobs:
       - name: Upload Jest results
         if: ${{ !cancelled() }}
         continue-on-error: true
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: jest-results-data-schemas
           path: jest-results/
@@ -751,7 +751,7 @@ jobs:
       - name: Upload Jest results
         if: ${{ !cancelled() }}
         continue-on-error: true
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: jest-results-packages-api-${{ matrix.shard }}
           path: jest-results/

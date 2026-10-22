@@ -61,7 +61,7 @@ jobs:
           gh pr comment "$PR_NUMBER" --body-file lighthouse-comment.md
       - name: Upload Lighthouse reports
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse
           path: |
