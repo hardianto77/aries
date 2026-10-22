@@ -394,7 +394,7 @@ jobs:
 
       - name: Upload Playwright HTML report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ matrix.artifact }}
           path: e2e/playwright-report/**
@@ -403,7 +403,7 @@ jobs:
 
       - name: Upload traces & screenshots
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-test-results-${{ matrix.artifact }}
           path: e2e/specs/.test-results/**
@@ -422,7 +422,7 @@ jobs:
 
       - name: Upload title ownership diagnostics
         if: ${{ always() && matrix.stream_store == 'memory' && startsWith(matrix.shard, '1/') }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-title-ownership-${{ matrix.artifact }}
           path: e2e/specs/.test-results/title-ownership/**
@@ -561,7 +561,7 @@ jobs:
 
       - name: Upload Playwright HTML report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-mcp-list-changed-${{ matrix.replicas }}-replicas
           path: e2e/playwright-report/**
@@ -570,7 +570,7 @@ jobs:
 
       - name: Upload traces & screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-mcp-list-changed-results-${{ matrix.replicas }}-replicas
           path: e2e/specs/.test-results/**
@@ -642,7 +642,7 @@ jobs:
 
       - name: Upload per-phase Playwright reports
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-mcp-apps-reports
           path: |
@@ -653,7 +653,7 @@ jobs:
 
       - name: Upload MCP Apps traces and screenshots
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-mcp-apps-results
           path: e2e/specs/.test-results/mcp-apps-*/**

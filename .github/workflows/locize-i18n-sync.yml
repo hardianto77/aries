@@ -94,7 +94,7 @@ jobs:
             --current-dir client/src/locales
 
       - name: Upload Validated Translations
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: locize-locales-${{ github.run_id }}
           path: client/src/locales
