@@ -12,13 +12,13 @@ services:
       - PORT=3080
       - MONGO_URI=mongodb://mongo:27017/LibreChat
       - MEILI_HOST=http://meilisearch:7700
-      - MEILI_MASTER_KEY=librechat-meili-master-key-2026
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-change-me}
       - APP_TITLE=Aries
       - ALLOW_REGISTRATION=true
       - JWT_SECRET=3713091c294c41e2ff09d332d990061c5e1a514aa26f2b2e5f4f96c3273685cb
       - JWT_REFRESH_SECRET=4053c7c8e977d0ea509c2712362b43945ee29a58e674daeca1ed86294c3736fa
-      - CREDS_KEY=8827f87c36f53ea4886ef1be64336d28secretkey1234567890123456
-      - CREDS_IV=secretiv1234567
+      - CREDS_KEY=${CREDS_KEY:-change-me}
+      - CREDS_IV=${CREDS_IV:-change-me}
     volumes:
       - /data/home/chat-agent/librechat.yaml:/app/librechat.yaml
       - ./images:/app/client/public/images
@@ -37,12 +37,12 @@ services:
     container_name: librechat-meilisearch
     restart: unless-stopped
     environment:
-      - MEILI_MASTER_KEY=librechat-meili-master-key-2026
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-change-me}
       - APP_TITLE=Aries
       - JWT_SECRET=3713091c294c41e2ff09d332d990061c5e1a514aa26f2b2e5f4f96c3273685cb
       - JWT_REFRESH_SECRET=4053c7c8e977d0ea509c2712362b43945ee29a58e674daeca1ed86294c3736fa
-      - CREDS_KEY=8827f87c36f53ea4886ef1be64336d28secretkey1234567890123456
-      - CREDS_IV=secretiv1234567
+      - CREDS_KEY=${CREDS_KEY:-change-me}
+      - CREDS_IV=${CREDS_IV:-change-me}
       - MEILI_NO_ANALYTICS=true
     volumes:
       - ./meili_data:/meili_data
