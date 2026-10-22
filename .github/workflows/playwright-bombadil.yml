@@ -39,7 +39,7 @@ jobs:
       BOMBADIL_TIME_LIMIT: '300s'
       E2E_CHROMIUM_CHANNEL: chrome
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Use Node.js 24.16.0
         uses: actions/setup-node@v4

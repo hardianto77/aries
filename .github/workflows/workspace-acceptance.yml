@@ -24,13 +24,13 @@ jobs:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
       HOMEBREW_NO_AUTO_UPDATE: '1'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       # Run the native worker unchanged, with Seatbelt and its real ownership checks.
       # Pin the external fixture so this acceptance result has a reproducible worker revision.
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: LibreChat-AI/code-interpreter
           ref: 67d75d859aee891923c40cde1db073489d74a424

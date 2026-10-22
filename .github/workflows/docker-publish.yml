@@ -66,7 +66,7 @@ jobs:
       # build leg of a run checks out the same immutable commit even if the
       # branch advances mid-run.
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.checkout_ref || github.sha }}
 
