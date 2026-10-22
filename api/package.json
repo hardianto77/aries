@@ -64,7 +64,7 @@
     "bcryptjs": "^2.4.3",
     "compression": "^1.8.2",
     "connect-redis": "^8.1.0",
-    "cookie": "^0.7.2",
+    "cookie": "^2.0.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dedent": "^1.5.3",
