@@ -1,0 +1,35 @@
+name: Build Aries Client
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'client/**'
+      - 'packages/data-provider/**'
+      - 'packages/data-schemas/**'
+      - '.github/workflows/build-client.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install deps
+        run: npm install --no-audit --no-fund
+
+      - name: Build client
+        run: npm run build:client
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aries-client-dist
+          path: client/dist/
+          retention-days: 7

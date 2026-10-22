@@ -1,0 +1,10 @@
+{{- if .Values.aries.configYamlContent }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "aries.fullname" $ }}-config
+data:
+  aries.yaml: |
+{{ .Values.aries.configYamlContent | indent 4 }}
+
+{{- end }}

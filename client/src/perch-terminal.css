@@ -1,0 +1,644 @@
+/*
+ * Perch Terminal — Aries chat UI redesign layer
+ * Load AFTER the app CSS (imported from style.css before tailwind).
+ * Warm near-black surfaces in dark mode, hairline warm borders, and the
+ * existing Aries terracotta accent (#d97757) untouched.
+ * Light mode keeps the stock palette; every rule below is scoped to `.dark`
+ * so the light theme still renders exactly as before.
+ */
+
+/* ---------- Palette tokens (dark) ---------- */
+.dark {
+  --perch-panel: #16130f;
+  --perch-panel-outer: #0d0b09;
+  --perch-border: #2a241d;
+  --perch-border-strong: #3a3128;
+  --perch-text: #e8e2d9;
+  --perch-text-muted: #9a9184;
+  --perch-accent: #d97757;
+  --perch-accent-soft: rgba(217, 119, 87, 0.14);
+  --perch-radius: 12px;
+  --perch-radius-lg: 16px;
+}
+
+.dark body {
+  background-color: var(--perch-panel-outer);
+}
+
+.dark #root {
+  background-color: var(--perch-panel-outer);
+  color: var(--perch-text);
+}
+
+/* ---------- Surfaces ---------- */
+.dark [data-testid="composer-surface"]:not([class*="border-series-6"]) {
+  background-color: var(--perch-panel);
+  border-color: var(--perch-border);
+  border-radius: var(--perch-radius-lg);
+}
+
+.dark .bg-surface-chat:not([class*="border-series-6"]),
+.dark .composer-surface {
+  background-color: var(--perch-panel);
+  border-color: var(--perch-border);
+}
+
+/* Hairline warm borders on chrome */
+.dark [class*="border-border-light"] {
+  border-color: var(--perch-border);
+}
+
+/* ---------- Sidebar ---------- */
+.dark aside,
+.dark #chat-history-nav,
+.dark [data-testid="mobile-drawer"] {
+  background-color: var(--perch-panel-outer);
+}
+
+.dark [data-testid="mobile-drawer"] {
+  border-color: var(--perch-border);
+}
+
+/* Section headings: small caps, terminal-style */
+.dark [data-testid="nav-user"] {
+  border-color: var(--perch-border);
+}
+
+/* Conversation rows: rounded, quiet hover */
+.dark #chat-history-nav a,
+.dark #chat-history-nav button[role="button"],
+.dark #chat-history-nav [role="listitem"] {
+  border-radius: var(--perch-radius);
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.dark #chat-history-nav a:hover {
+  background-color: rgba(217, 119, 87, 0.07);
+}
+
+/* ---------- Message thread ---------- */
+/* Agent turns: no bubble restyle (the row already sits on the page canvas), but
+   the thread reads terminal-style through the tool-call cards below. */
+
+/* Tool-call / activity rows: hairline card with a soft accent on hover */
+.dark [data-testid="tool-call-group"],
+.dark [data-testid="activity-phase-group"],
+.dark [data-testid="tool-approval-panel"],
+.dark [class*="activity-group"] {
+  border: 1px solid var(--perch-border);
+  border-radius: var(--perch-radius);
+  background-color: var(--perch-panel-outer);
+}
+
+/* Streaming status line: the Elapsed timer doubles as it, styled terminal-style
+   only while it is mounted (it only mounts mid-generation). */
+.dark span[data-testid="stream-elapsed"],
+:root span[data-testid="stream-elapsed"] {
+  color: var(--aries-accent, #d97757);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dark span[data-testid="stream-elapsed"] {
+  color: var(--perch-accent);
+}
+
+.dark span[data-testid="stream-elapsed"]::before {
+  content: '';
+  display: inline-block;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: var(--perch-accent);
+  margin-right: 0.375rem;
+  vertical-align: middle;
+  animation: perch-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes perch-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes perch-status-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================================
+ * Perch v2 — closer pass to the reference mockup. Everything below is
+ * presentation only: rows, badges, headers and meta lines that the app
+ * already renders, dressed terminal-style. Light mode untouched.
+ * ===================================================================== */
+
+/* ---------- Sidebar: conversation rows as workspace entries ---------- */
+/* Generative rows read like the mockup's WORKING entries: accent dot,
+   uppercase badge state, muted trailing status. Scoped to the running
+   state (`[data-testid="convo-item"]` with a spinner ring) via the
+   aria-label LibeChat already sets — matched structurally instead:
+   generating rows get the pulsing mark through the spinner's parent. */
+.dark [data-testid='convo-item'] {
+  border-radius: var(--perch-radius);
+}
+
+.dark [data-testid='convo-item']:hover {
+  background-color: rgba(217, 119, 87, 0.07);
+}
+
+.dark [data-testid='convo-item'][aria-current='page'] {
+  background-color: var(--perch-accent-soft);
+}
+
+/* Task-style headers: message author rows read as the mockup's task line —
+   small caps, wide tracking, muted meta on the right. */
+.dark .message-render h2 {
+  letter-spacing: 0.02em;
+}
+
+.dark .message-render h2 .font-normal {
+  color: var(--perch-text-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Agent-run and tool rows inside a turn: hairline cards like the mockup's
+   sub-agent list, with the right-side `tools · running` meta quiet. */
+.dark .message-render [class*='activity'],
+.dark .message-render [class*='Activity'] {
+  border-color: var(--perch-border);
+}
+
+/* ---------- Composer: model pill + action chips ---------- */
+/* The model selector pill and the row of small controls under the input
+   read as the mockup's `GPT-5 SOLO · AGENTS` toolbar. */
+.dark [data-testid='composer-surface'] button[class*='rounded-full'] {
+  border-radius: 9999px;
+}
+
+/* Send button: solid accent, terminal-ink, consistent radius */
+.dark [data-testid='composer-surface'] button[type='submit'],
+.dark [data-testid='composer-surface'] button[aria-label*='Send' i] {
+  background-color: var(--perch-accent);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.dark [data-testid='composer-surface'] button[type='submit']:hover:not(:disabled),
+.dark [data-testid='composer-surface'] button[aria-label*='Send' i]:hover:not(:disabled) {
+  background-color: #c96848;
+}
+
+/* ---------- Chat header: task title + meta line ---------- */
+/* Mirrors the mockup's header: title left, quiet uppercase meta right. */
+.dark [data-testid='chat-header'] .font-semibold {
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Landing: greeting closer to the mockup card ---------- */
+/* The greeting block gets the warm panel treatment behind the input card */
+.dark .text-message,
+.dark .message-render {
+  min-width: 0;
+}
+
+/* =====================================================================
+ * Perch v2 — module pass. Every app surface (dialogs, dropdown menus,
+ * settings, side panels, toasts, scrims) reads as the same warm terminal
+ * ink, so switching between features never changes "temperature".
+ * All rules scoped to `.dark`; light theme untouched.
+ * ===================================================================== */
+
+/* ---------- Dialog scrim: warm black instead of neutral ---------- */
+.dark .bg-scrim,
+.dark .bg-scrim-alert,
+.dark .bg-scrim-modal {
+  background-color: rgb(8 6 4 / 0.72);
+}
+
+/* ---------- Dialogs (OG dialogs, admin, terms, key dialogs) ---------- */
+.dark .bg-surface-dialog {
+  background-color: var(--perch-panel);
+  border-color: var(--perch-border);
+}
+
+.dark .bg-surface-dialog [class*='border-border-light'],
+.dark .bg-surface-dialog [class*='border-border-inset'] {
+  border-color: var(--perch-border);
+}
+
+/* Dialog title: small caps tracking like the mockup's panel headers */
+.dark .bg-surface-dialog h2,
+.dark .bg-surface-dialog [class*='DialogTitle'] {
+  letter-spacing: 0.01em;
+}
+
+/* Primary buttons inside dialogs: solid accent, consistent radius */
+.dark .bg-surface-dialog button.bg-primary,
+.dark .bg-surface-dialog [data-testid='submit-button'] {
+  background-color: var(--perch-accent);
+  color: #fff;
+}
+
+.dark .bg-surface-dialog button.bg-primary:hover:not(:disabled) {
+  background-color: #c96848;
+}
+
+/* ---------- Dropdown menus & popovers (endpoints, header menu, convo options) ---------- */
+.dark .popover-ui {
+  background-color: var(--perch-panel);
+  border-color: var(--perch-border);
+  box-shadow: 0 12px 28px -8px rgb(0 0 0 / 0.55);
+}
+
+.dark .popover-ui [data-focus-visible],
+.dark .popover-ui [data-active-item] {
+  background-color: rgba(217, 119, 87, 0.1);
+}
+
+.dark .bg-surface-menu {
+  background-color: var(--perch-panel);
+  border-color: var(--perch-border);
+}
+
+/* ---------- Settings dialog (two-column, headlessui panel) ---------- */
+.dark [role='dialog'].bg-surface-dialog .bg-surface-sidebar,
+.dark [role='dialog'] aside[class*='bg-surface'] {
+  background-color: var(--perch-panel-outer);
+}
+
+.dark [role='dialog'] [role='tab'],
+.dark [role='dialog'] [data-headlessui-state] [role='tab'] {
+  border-radius: var(--perch-radius);
+}
+
+.dark [role='dialog'] [role='tab'][aria-selected='true'],
+.dark [role='dialog'] [role='tab'][data-headlessui-state*='selected'] {
+  background-color: var(--perch-accent-soft);
+  color: var(--perch-accent);
+}
+
+/* ---------- Side panel (agents / prompts / bookmarks rail) ---------- */
+.dark [id*='side-panel'],
+.dark [data-testid*='side-panel'] {
+  background-color: var(--perch-panel-outer);
+  border-color: var(--perch-border);
+}
+
+/* ---------- Inputs & selects across modules ---------- */
+.dark .bg-surface-dialog input,
+.dark .bg-surface-dialog textarea,
+.dark .bg-surface-dialog select {
+  border-color: var(--perch-border-strong);
+  border-radius: 8px;
+}
+
+.dark .bg-surface-dialog input:focus-visible,
+.dark .bg-surface-dialog textarea:focus-visible,
+.dark .bg-surface-dialog select:focus-visible {
+  outline-color: var(--perch-accent);
+  border-color: var(--perch-accent);
+}
+
+/* ---------- Checkboxes / toggles: accent on checked ---------- */
+.dark .bg-surface-dialog [role='switch'][data-state='checked'],
+.dark .bg-surface-dialog [data-headlessui-state*='checked'] {
+  background-color: var(--perch-accent);
+}
+
+/* ---------- Toasts ---------- */
+.dark [data-testid='toast'],
+.dark [role='status'][class*='toast'],
+.dark [class*='Toastify'] {
+  --toastify-color-dark: var(--perch-panel);
+  --toastify-color-info: var(--perch-accent);
+  --toastify-color-success: var(--perch-accent);
+  --toastify-color-error: #b3402f;
+  --toastify-color-progress-info: var(--perch-accent);
+  --toastify-color-progress-success: var(--perch-accent);
+}
+
+/* ---------- Scrollbars: warm hairline everywhere in dark mode ---------- */
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--perch-border-strong);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #4a4034;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark span[data-testid="stream-elapsed"]::before {
+    animation: none;
+  }
+}
+
+/* Tool-call / activity rows: hairline card with a soft accent on hover */
+.dark [data-testid="tool-approval-panel"],
+.dark [class*="activity-group"] {
+  border: 1px solid var(--perch-border);
+  border-radius: var(--perch-radius);
+  background-color: var(--perch-panel-outer);
+}
+
+/* ---------- Landing / greeting state ---------- */
+/* The landing greeting heading: tighter, terminal-ink */
+.dark .text-text-primary.font-medium {
+  letter-spacing: -0.01em;
+}
+
+/* Suggestion chips under the landing composer */
+.perch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--perch-border);
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.dark .perch-chip {
+  background-color: transparent;
+  color: var(--perch-text-muted);
+}
+
+.dark .perch-chip:hover {
+  border-color: var(--perch-accent);
+  color: var(--perch-accent);
+  background-color: var(--perch-accent-soft);
+}
+
+:root:not(.dark) .perch-chip {
+  border-color: var(--border-light, #e0e0e0);
+  color: var(--text-secondary, #555);
+  background-color: transparent;
+}
+
+:root:not(.dark) .perch-chip:hover {
+  border-color: var(--aries-accent, #d97757);
+  color: var(--aries-accent, #d97757);
+}
+
+/* ---------- Composer ---------- */
+/* Composer surface chips (tone=surface SharedChip) read as terminal quick-actions:
+   pill-shaped, quiet ink, terracotta on hover. Scoped to the composer surface so
+   the same component stays untouched in prompts/settings dialogs. */
+.dark [data-testid="composer-surface"] span[class*="border-border-chrome"][class*="bg-surface-secondary"],
+.dark [data-testid="composer-surface"] span[class*="border-border-light"][class*="bg-surface-secondary"] {
+  border-color: var(--perch-border);
+  background-color: transparent;
+  border-radius: 9999px;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.dark [data-testid="composer-surface"] span[class*="bg-surface-secondary"]:hover {
+  border-color: var(--perch-accent);
+  color: var(--perch-accent);
+}
+
+/* Composer: rounded panel, warm fill, hairline edge */
+.dark [data-testid="composer-surface"] {
+  border-color: var(--perch-border-strong);
+  border-radius: var(--perch-radius-lg);
+}
+
+/* ---------- Sidebar AGENTS section ---------- */
+.perch-agents-section {
+  padding: 0 0.75rem;
+}
+
+.perch-agents-heading {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--perch-text-muted, #9a9184);
+  padding: 0.75rem 0 0.375rem;
+  user-select: none;
+}
+
+.perch-agent-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--perch-radius, 12px);
+  font-size: 0.8125rem;
+  color: var(--perch-text, inherit);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 140ms ease;
+  min-width: 0;
+}
+
+.perch-agent-row:hover {
+  background-color: rgba(217, 119, 87, 0.07);
+}
+
+.perch-agent-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  background: var(--aries-accent, #d97757);
+  animation: perch-pulse 1.4s ease-in-out infinite;
+}
+
+.perch-agent-row[data-status='idle'] .perch-agent-dot {
+  background: var(--perch-text-muted, #9a9184);
+  animation: none;
+}
+
+.perch-agent-row[data-status='idle'] .perch-agent-name {
+  color: var(--perch-text-muted, #9a9184);
+}
+
+.perch-agent-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+
+.perch-agent-badge {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.0625rem 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.perch-agent-row[data-status='working'] .perch-agent-badge {
+  color: var(--aries-accent, #d97757);
+}
+
+.perch-agent-row[data-status='idle'] .perch-agent-badge {
+  color: var(--perch-text-muted, #9a9184);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .perch-agent-dot {
+    animation: none;
+  }
+}
+
+/* Sidebar brand header */
+.perch-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 0.75rem 0.375rem;
+  user-select: none;
+}
+
+/* The mode dropdown ('Chat ▾') hugs the row's trailing edge, mockup-style */
+.perch-brand > [data-testid='perch-panel-switcher'] {
+  margin-left: auto;
+}
+
+.perch-brand-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 8px;
+  background: var(--aries-accent, #d97757);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.perch-brand-wordmark {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--perch-text, inherit);
+}
+
+.perch-brand-tag {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--aries-accent, #d97757);
+  border: 1px solid var(--aries-accent, #d97757);
+  border-radius: 4px;
+  padding: 0 0.25rem;
+  line-height: 1.25rem;
+  opacity: 0.85;
+}
+
+/* ---------- Mobile & responsive ---------- */
+/* Tablet (≤768px): drawer sidebar + composer tightening. Sidebar elements are
+   rendered inside the drawer on mobile too, so these keep the Perch styling
+   consistent between desktop sidebar and mobile drawer. */
+@media (max-width: 768px) {
+  .perch-agent-row {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .perch-brand {
+    padding: 0.75rem 0.625rem 0.25rem;
+  }
+
+  .perch-agents-section {
+    padding: 0 0.625rem;
+  }
+
+  .perch-agent-badge {
+    font-size: 0.5rem;
+  }
+
+  /* Composer chips: let the row wrap instead of overflowing on narrow screens */
+  .dark [data-testid='composer-surface'] {
+    border-radius: var(--perch-radius);
+  }
+
+  .perch-chip {
+    max-width: 100%;
+  }
+}
+
+/* Phone (≤480px): single-thumb layout. */
+@media (max-width: 480px) {
+  /* Landing greeting scales down; suggestion chips wrap fully and never clip */
+  .perch-chip {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+  }
+
+  /* AGENTS badge stays readable but compact next to the dot */
+  .perch-agent-row {
+    gap: 0.375rem;
+  }
+
+  .perch-brand-wordmark {
+    font-size: 0.875rem;
+  }
+
+  .perch-brand-tag {
+    display: none;
+  }
+
+  /* New-chat CTA: full-width, thumb-height, safe-area aware (set on the button
+     itself below via .perch-new-chat-wrap so it also applies on tablets) */
+}
+
+/* New-chat CTA wrapper: respects the home-indicator safe area on phones */
+.perch-new-chat-wrap {
+  padding-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .perch-new-chat-wrap {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* CTA: comfortable thumb target on touch screens */
+  [data-testid='perch-new-chat-button'] {
+    height: 2.75rem;
+  }
+}
+
+/* Drawer (mobile sidebar): Perch surfaces carry over so desktop and mobile read
+   as one layout. */
+.dark [data-testid='mobile-drawer'] .perch-agent-row:hover,
+.dark [data-testid='mobile-drawer'] #chat-history-nav a:hover {
+  background-color: rgba(217, 119, 87, 0.07);
+}
+
+/* Thread + header on phones: keep the chat header readable over the warm canvas
+   and let long titles truncate instead of pushing meta off-screen. */
+.dark [data-testid='chat-header'] h1,
+.dark [data-testid='chat-header'] h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  /* Message content: full-bleed horizontal padding without dead gutter */
+  .dark .text-message {
+    word-break: break-word;
+  }
+}

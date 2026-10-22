@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": false,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "types": ["node", "jest", "@testing-library/jest-dom", "vite/client"],
+    "noUncheckedSideEffectImports": false,
+    "jsx": "preserve",
+    "paths": {
+      "~/*": ["./src/*"],
+      "test/*": ["./test/*"],
+      "*": ["./*", "../../node_modules/*"],
+      "aries-data-provider/*": ["../packages/data-provider/*"]
+    }
+  },
+  "exclude": ["node_modules", "vite.config.ts"],
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "test/setupTests.js",
+    "env.d.ts",
+    "../packages/client/src/hooks/useDelayedRender.tsx",
+    "../packages/client/src/components/InfoHoverCard.tsx"
+  ]
+}

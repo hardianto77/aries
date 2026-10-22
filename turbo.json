@@ -1,0 +1,86 @@
+{
+  "$schema": "https://v2-10-5.turborepo.dev/schema.json",
+  "globalDependencies": ["package-lock.json"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "!src/**/__tests__/**",
+        "!src/**/__mocks__/**",
+        "!src/**/*.test.*",
+        "!src/**/*.spec.*",
+        "scripts/**",
+        "tsdown.config.mjs",
+        "tsconfig.json",
+        "tsconfig.build.json",
+        "vite.config.ts",
+        "index.html",
+        "postcss.config.*",
+        "tailwind.config.*",
+        "package.json"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "test:ci": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "passThroughEnv": ["*"]
+    },
+    "@aries/data-schemas#test:ci": {
+      "dependsOn": ["^build", "aries-data-provider#build"],
+      "cache": false,
+      "passThroughEnv": ["*"]
+    },
+    "@aries/api#test:ci": {
+      "dependsOn": ["^build", "aries-data-provider#build", "@aries/data-schemas#build"],
+      "cache": false,
+      "passThroughEnv": ["*"]
+    },
+    "@aries/data-schemas#build": {
+      "dependsOn": ["^build", "aries-data-provider#build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/__tests__/**",
+        "!**/__mocks__/**",
+        "!**/*.test.*",
+        "!**/*.spec.*"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "@aries/api#build": {
+      "dependsOn": ["^build", "aries-data-provider#build", "@aries/data-schemas#build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/__tests__/**",
+        "!**/__mocks__/**",
+        "!**/*.test.*",
+        "!**/*.spec.*"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "@aries/client#build": {
+      "dependsOn": ["^build", "aries-data-provider#build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/__tests__/**",
+        "!**/__mocks__/**",
+        "!**/*.test.*",
+        "!**/*.spec.*"
+      ],
+      "outputs": ["dist/**"],
+      "env": ["NODE_ENV", "VITE_ENABLE_LOGGER", "VITE_LOGGER_FILTER"]
+    },
+    "@aries/chat#build": {
+      "dependsOn": ["^build", "aries-data-provider#build", "@aries/client#build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/__tests__/**",
+        "!**/__mocks__/**",
+        "!**/*.test.*",
+        "!**/*.spec.*"
+      ],
+      "outputs": ["dist/**"]
+    }
+  }
+}

@@ -1,0 +1,215 @@
+/*
+ * Aries UI Refinement Layer v1.0
+ * aries.ai.id — LibreChat v0.8.7 custom polish
+ * Load AFTER app CSS. Hand-authored, no build step.
+ * Scope: design tokens, surfaces, sidebar, chat, composer,
+ *        buttons, inputs, dialogs, scrollbars, focus, responsive.
+ */
+
+:root {
+  /* Aries brand tokens */
+  --aries-accent: #d97757;        
+  --aries-accent-hover: #c4654a;
+  --aries-accent-soft: rgba(217, 119, 87, 0.12);
+  --aries-radius: 10px;
+  --aries-radius-lg: 14px;
+  --aries-radius-pill: 9999px;
+  --aries-shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
+  --aries-shadow-md: 0 4px 12px rgba(0,0,0,.10);
+  --aries-shadow-lg: 0 12px 32px rgba(0,0,0,.16);
+  --aries-transition: 160ms cubic-bezier(.4,0,.2,1);
+  --aries-focus-ring: 0 0 0 2px rgba(224,70,70,.55);
+}
+
+/* ---------- Buttons ---------- */
+button:not([class*="icon"]),
+[role="button"] {
+  transition: background-color var(--aries-transition),
+              box-shadow var(--aries-transition),
+              transform var(--aries-transition);
+}
+button:active:not(:disabled) { transform: scale(.98); }
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--aries-focus-ring);
+  border-radius: var(--aries-radius);
+}
+
+/* Primary send button accent */
+button[class*="submit"], form button[type="submit"] { }
+form button[type="submit"]:not(:disabled):not([disabled]):hover { }
+
+/* ---------- Inputs ---------- */
+input, textarea, select {
+  border-radius: var(--aries-radius) !important;
+  transition: border-color var(--aries-transition), box-shadow var(--aries-transition);
+}
+input:focus, textarea:focus { outline: none; }
+
+/* ---------- Sidebar ---------- */
+nav[class*="sidebar"], aside[class*="nav"] {
+  scrollbar-width: thin;
+}
+nav a, aside a {
+  border-radius: var(--aries-radius);
+  transition: background-color var(--aries-transition), color var(--aries-transition);
+}
+nav a:hover, aside a:hover { background-color: rgba(127,127,127,.10); }
+
+/* ---------- Chat messages ---------- */
+[class*="message"][class*="text"], .markdown-yg {
+  line-height: 1.65;
+  letter-spacing: .01em;
+}
+/* code blocks */
+pre {
+  border-radius: var(--aries-radius-lg) !important;
+  border: 1px solid rgba(127,127,127,.16);
+}
+pre code { font-variant-ligatures: none; }
+code:not(pre code) {
+  border-radius: 6px;
+  padding: .1em .35em;
+  background: rgba(127,127,127,.14);
+}
+
+/* ---------- Composer ---------- */
+form[class*="composer"], form {
+  --tw-ring-color: transparent;
+}
+
+/* ---------- Dialogs & dropdowns ---------- */
+[role="dialog"], [role="menu"], [data-radix-popper-content-wrapper] > * {
+  border-radius: var(--aries-radius-lg) !important;
+  box-shadow: var(--aries-shadow-lg) !important;
+}
+
+/* ---------- Scrollbars (webkit) ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(127,127,127,.35);
+  border-radius: var(--aries-radius-pill);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(127,127,127,.55); }
+* { scrollbar-color: rgba(127,127,127,.4) transparent; }
+
+/* ---------- Selection ---------- */
+::selection { background: var(--aries-accent-soft); }
+
+/* ---------- Images/avatars ---------- */
+img { border-radius: inherit; }
+
+/* ---------- Landing / login ---------- */
+/* subtle entrance animation */
+#root > * { animation: aries-fade-in 280ms ease-out; }
+@keyframes aries-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root > * { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* =========================================================
+   RESPONSIVE — Desktop 1200 / Tablet 768 / Mobile 360
+   ========================================================= */
+
+/* --- Tablet 768 --- */
+@media (max-width: 768px) {
+  /* tighter spacing for dense screens */
+  pre { margin: .75rem 0; }
+  [class*="message"][class*="text"] { padding-inline: .25rem; }
+}
+
+/* --- Mobile 360 --- */
+@media (max-width: 480px) {
+  :root { --aries-radius-lg: 12px; }
+
+  /* prevent overflow from long code lines */
+  pre, pre code {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* larger touch targets */
+  button, [role="button"] { min-height: 40px; }
+  nav a, aside a { min-height: 44px; }
+
+  /* full-width composer */
+  form { max-width: 100% !important; }
+
+  /* tables scroll instead of overflowing */
+  .markdown-yg table, [class*="message"] table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* dialogs nearly full-screen */
+  [role="dialog"] {
+    max-width: calc(100vw - 24px) !important;
+  }
+
+  /* hide decorative shadows that cost perf on mobile */
+  :root { --aries-shadow-md: 0 2px 8px rgba(0,0,0,.08); }
+}
+
+/* --- Large desktop 1200+ : comfortable reading width --- */
+@media (min-width: 1200px) {
+  .markdown-yg, [class*="message"][class*="text"] {
+    max-width: 820px;
+  }
+}
+
+/* ==== ARIES v3 — Responsive hardening + NO-SLIDER + Konsistensi (commit terpisah) ==== */
+/* 1. Kill horizontal sliders/carousels — konten selalu wrap/tombol, bukan geser */
+[class*="carousel"], [class*="Carousel"], .embla, [data-embla] {
+  display: flex !important; flex-wrap: wrap !important; overflow: visible !important;
+  transform: none !important; scroll-snap-type: none !important;
+}
+[class*="carousel"] > *, [class*="Carousel"] > * { flex: 1 1 240px; max-width: 100%; }
+[aria-roledescription="carousel"], [role="carousel"] { display: contents; }
+
+/* 2. No horizontal page overflow — anti geser samping di SEMUA breakpoint */
+html, body { overflow-x: hidden !important; max-width: 100vw; }
+body * { min-width: 0; }
+img, svg, video, canvas, iframe { max-width: 100%; height: auto; }
+pre, code { white-space: pre-wrap; word-break: break-word; overflow-x: auto; }
+
+/* 3. Sidebar nav: drawer overlay di mobile, bukan slide horizontal berdampingan */
+@media (max-width: 767px) {
+  nav, [class*="sidebar"], [class*="Sidebar"] { max-width: 84vw !important; }
+  [class*="sidebar"]::-webkit-scrollbar, [class*="Sidebar"]::-webkit-scrollbar { width: 0; }
+}
+
+/* 4. Konsistensi komponen: radius, shadow, spacing seragam */
+button, [role="button"], a[class*="btn"] { border-radius: 10px !important; }
+input, textarea, select { border-radius: 10px !important; }
+[class*="card"], [class*="Card"], [role="dialog"] { border-radius: 14px !important; }
+[role="dialog"] { max-width: calc(100vw - 24px) !important; }
+
+/* 5. Touch target & typography mobile */
+@media (max-width: 767px) {
+  button, a[role="button"], [role="button"], input, select, textarea { min-height: 44px; }
+  h1 { font-size: 1.45rem; } h2 { font-size: 1.2rem; }
+  [class*="grid"], [class*="Grid"] { grid-template-columns: 1fr !important; }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  [class*="grid"], [class*="Grid"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+@media (min-width: 1200px) {
+  main, [role="main"] { max-width: 1400px; margin-inline: auto; }
+}
+
+/* 6. Konsisten: table scroll dalam wrapper, bukan geser halaman */
+table { display: block; overflow-x: auto; max-width: 100%; }

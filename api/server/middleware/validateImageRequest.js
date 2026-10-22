@@ -1,0 +1,66 @@
+const cookie = require('cookie');
+const {
+  createImageAuthorizationMiddleware,
+  getAppConfigOptionsFromUser,
+  getBasePath,
+  isEnabled,
+} = require('@aries/api');
+const {
+  findSession,
+  getAgent,
+  getAssistant,
+  getUserById,
+  getUserPrincipals,
+  hasCapabilityForPrincipals,
+  hasPermission,
+} = require('~/models');
+const { getAppConfig } = require('~/server/services/Config');
+
+const getAssistantEndpointConfigs = (appConfig) =>
+  [
+    appConfig?.endpoints?.assistants && {
+      endpoint: 'assistants',
+      ...appConfig.endpoints.assistants,
+    },
+    appConfig?.endpoints?.azureAssistants && {
+      endpoint: 'azureAssistants',
+      ...appConfig.endpoints.azureAssistants,
+    },
+  ].filter(Boolean);
+
+/**
+ * Thin Express adapter for the typed image-authorization service in `@aries/api`.
+ * @param {{secureImageLinks?: boolean, assistantEndpoints?: object[]}} [config]
+ */
+function createValidateImageRequest(config = {}) {
+  const options = {
+    secureImageLinks: config.secureImageLinks,
+    assistantEndpoints: config.assistantEndpoints,
+  };
+
+  const deps = {
+    parseCookies: cookie.parse,
+    isOpenIdReuseEnabled: () => isEnabled(process.env.OPENID_REUSE_TOKENS),
+    getBasePath,
+    findSession,
+    getAgent,
+    getAssistant,
+    getUserById,
+    getUserPrincipals,
+    hasCapabilityForPrincipals,
+    hasPermission,
+    getImageConfig: async ({ userId, user }) => {
+      const appConfig = await getAppConfig(
+        getAppConfigOptionsFromUser({ ...user, id: userId }, user.tenantId),
+      );
+      return {
+        secureImageLinks: appConfig.secureImageLinks,
+        assistantEndpoints: getAssistantEndpointConfigs(appConfig),
+      };
+    },
+  };
+
+  return createImageAuthorizationMiddleware(options, deps);
+}
+
+module.exports = createValidateImageRequest;

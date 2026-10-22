@@ -1,0 +1,475 @@
+
+/* ═══ Aries AI — brand & responsive polish (desktop + mobile) ═══ */
+
+:root {
+  --aries-accent: #d97757;
+  --aries-accent-soft: rgba(217, 119, 87, 0.14);
+}
+
+/* ── Auth (login/register) card ── */
+.aries-auth-card {
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.25);
+}
+.text-token-text-primary h1 {
+  letter-spacing: -0.02em;
+}
+/* Login submit button accent */
+button[type="submit"].btn-submit {
+  background: var(--aries-accent);
+}
+button[type="submit"].btn-submit:hover {
+  filter: brightness(1.08);
+}
+
+/* ── Header / navbar brand ── */
+header nav ol li span.truncate {
+  max-width: 40vw;
+}
+
+/* ── Composer (input area): avoid overflow on long words/code ── */
+form[data-testid="chat-form"] textarea {
+  overflow-x: hidden;
+  word-break: break-word;
+}
+
+/* ── Modals & dropdowns: fit small screens ── */
+@media (max-width: 640px) {
+  [role="dialog"] {
+    max-width: calc(100vw - 1.5rem) !important;
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+  }
+  [role="menu"] {
+    max-width: calc(100vw - 1.5rem);
+  }
+  /* Endpoint/model dropdown full-width tap targets */
+  [role="listbox"] [role="option"] {
+    min-height: 44px;
+  }
+}
+
+/* ── Mobile safe areas (iPhone notch/home bar) ── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  @media (max-width: 767px) {
+    form[data-testid="chat-form"] {
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* ── Code blocks in chat: horizontal scroll, no page break ── */
+pre code {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Tables in chat responses: scrollable wrapper on mobile ── */
+.message-content table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Messages: readable line length on very wide screens ── */
+@media (min-width: 1536px) {
+  .message-content {
+    max-width: 80ch;
+  }
+}
+
+/* ── Focus visibility (accessibility) ── */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--aries-accent);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion respect ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Aries UI v2 — consistency & refinement layer (extends v1)
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --aries-radius: 10px;
+  --aries-radius-lg: 14px;
+  --aries-accent-hover: color-mix(in srgb, var(--aries-accent) 88%, black);
+  --aries-accent-contrast: #ffffff;
+  --aries-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.08);
+  --aries-shadow-lg: 0 12px 32px rgb(0 0 0 / 0.16);
+  --aries-transition: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --aries-accent-focus: color-mix(in srgb, var(--aries-accent) 55%, transparent);
+}
+
+/* ── Consistent interactive transitions & press feedback ── */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']) {
+  transition:
+    background-color var(--aries-transition),
+    border-color var(--aries-transition),
+    box-shadow var(--aries-transition),
+    transform var(--aries-transition);
+}
+button:not(:disabled):active,
+[role='button']:active {
+  transform: scale(0.98);
+}
+
+/* Unified focus ring (consistent shadow ring, replaces outline rule) */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role='option']:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--aries-accent-focus);
+  border-radius: var(--aries-radius);
+}
+
+/* ── Inputs: consistent radius + focus ── */
+input:not([type='checkbox']):not([type='radio']),
+textarea,
+select {
+  border-radius: var(--aries-radius);
+  transition:
+    border-color var(--aries-transition),
+    box-shadow var(--aries-transition);
+}
+
+/* ── Sidebar nav items: radius + hover surface ── */
+nav a,
+nav [role='button'] {
+  border-radius: var(--aries-radius);
+  transition: background-color var(--aries-transition);
+}
+nav a:hover {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+/* ── Cards & surfaces: consistent radius ── */
+[class*='surface-'],
+[class*='rounded-xl'],
+[class*='rounded-2xl'] {
+  border-radius: var(--aries-radius-lg);
+}
+
+/* ── Scrollbars: slim, themed, both engines ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(127 127 127 / 0.4) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(127 127 127 / 0.35);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(127 127 127 / 0.55);
+}
+
+/* ── Text selection in brand tint ── */
+::selection {
+  background: var(--aries-accent-soft);
+}
+
+/* ── Code blocks & pre: rounded, bordered ── */
+pre {
+  border-radius: var(--aries-radius-lg);
+  border: 1px solid rgb(127 127 127 / 0.16);
+}
+code:not(pre code) {
+  border-radius: 6px;
+  padding: 0.1em 0.35em;
+  background: rgb(127 127 127 / 0.14);
+}
+
+/* ── Fade-in entrance (reduced-motion handled by v1 rule) ── */
+#root > * {
+  animation: aries-enter 240ms cubic-bezier(0.2, 0, 0, 1);
+}
+@keyframes aries-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ═══ RESPONSIVE — Desktop 1200 / Tablet 768 / Mobile 360 ═══ */
+
+/* Tablet ≤768: tighter rhythm */
+@media (max-width: 768px) {
+  pre {
+    margin: 0.75rem 0;
+  }
+  .message-content {
+    padding-inline: 0.25rem;
+  }
+}
+
+/* Mobile ≤480: touch ergonomics + overflow guards */
+@media (max-width: 480px) {
+  :root {
+    --aries-radius-lg: 12px;
+    --aries-shadow-lg: 0 8px 20px rgb(0 0 0 / 0.14);
+  }
+  button,
+  [role='button'] {
+    min-height: 40px;
+  }
+  nav a,
+  nav [role='button'],
+  [role='option'] {
+    min-height: 44px;
+  }
+  form[data-testid='chat-form'] {
+    max-width: 100% !important;
+  }
+  .message-content img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Desktop ≥1200: comfortable measure */
+@media (min-width: 1200px) {
+  .message-content {
+    max-width: 820px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Aries Claude theme — warm cream canvas + terracotta accent
+   (overrides the runtime theme RGB-triplet variables; light mode)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --aries-accent: #d97757;
+  --aries-accent-soft: rgba(217, 119, 87, 0.14);
+  --page-canvas: 250 249 245;
+  --surface-sidebar: 245 244 237;
+  --surface-chat: 255 255 255;
+  --surface-primary: 255 255 255;
+  --surface-primary-alt: 250 249 245;
+  --surface-secondary: 250 249 245;
+  --surface-secondary-alt: 240 238 230;
+  --surface-user-message: 240 238 230;
+  --surface-composer: 255 255 255;
+  --surface-card: 255 255 255;
+  --surface-menu: 255 255 255;
+  --surface-popover: 255 255 255;
+  --surface-dialog: 255 255 255;
+  --surface-code: 250 249 245;
+  --surface-code-body: 250 249 245;
+  --surface-code-inline: 240 238 230;
+  --surface-hover: 240 238 230;
+  --surface-active: 240 238 230;
+  --surface-pressed: 229 226 217;
+  --surface-fixed: 250 249 245;
+  --surface-fixed-hover: 240 238 230;
+  --header-primary: 250 249 245;
+  --header-hover: 240 238 230;
+  --header-button-hover: 240 238 230;
+  --text-primary: 31 30 29;
+  --text-secondary: 61 61 58;
+  --accent-primary: 217 119 87;
+  --accent-primary-hover: 191 96 66;
+  --surface-submit: 217 119 87;
+  --surface-submit-hover: 191 96 66;
+  --link: 191 96 66;
+  --link-hover: 158 84 56;
+  --ring-primary: 217 119 87;
+  --border-light: 229 226 217;
+  --border-medium: 214 210 199;
+  --border-menu: 229 226 217;
+  --border-control: 214 210 199;
+  --border-field-focus: 217 119 87;
+  --avatar-fill: 217 119 87;
+  --avatar-text: 255 255 255;
+  --scrollbar-thumb: 214 210 199;
+  --field-fill: 255 255 255;
+  --field-text: 31 30 29;
+  --surface-tooltip: 255 255 255;
+  --text-tooltip: 31 30 29;
+  --button-primary: 31 30 29;
+  --button-primary-hover: 61 61 58;
+}
+
+/* Claude-look chrome details */
+/* Sidebar: cream, subtle divider */
+nav, aside {
+  background-color: rgb(var(--surface-sidebar));
+}
+/* Chat canvas: white card on cream page */
+body {
+  background-color: rgb(var(--page-canvas));
+}
+/* User message: soft pill bubble (Claude style) */
+[data-testid="user-message"], .user-message {
+  background: rgb(var(--surface-user-message));
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+}
+/* Rounded message avatars */
+.MessageIcon img, [data-testid="message-icon"] { border-radius: 50%; }
+/* Composer: rounded card with warm border + soft shadow */
+textarea[aria-label], .composer, form[class*="composer"] {
+  border-radius: 1.25rem;
+}
+/* Submit button: terracotta */
+button[type="submit"] {
+  background-color: rgb(var(--surface-submit)) !important;
+}
+button[type="submit"]:hover {
+  background-color: rgb(var(--surface-submit-hover)) !important;
+}
+
+/* ═══ MCP & dialog centering + responsive fix v2 ═══
+   Center every modal dialog on both axes at all breakpoints using
+   inset margin-auto (robust vs. Radix animations/transforms);
+   no transform = nothing can drift left/right. */
+[role="dialog"][aria-modal="true"] {
+  position: fixed !important;
+  inset: 0 !important;
+  margin: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: min(100%, 32rem) !important;
+  max-width: calc(100vw - 1.5rem) !important;
+  max-height: 85dvh !important;
+  overflow-y: auto !important;
+  border-radius: 1rem !important;
+  transform: none !important;
+  height: fit-content !important;
+}
+@media (min-width: 769px) {
+  [role="dialog"][aria-modal="true"] {
+    width: min(100%, 40rem) !important;
+  }
+}
+/* Tall dialogs (MCP form): internal scroll, never offscreen */
+[role="dialog"][aria-modal="true"] form {
+  max-height: none;
+}
+/* MCP config dialog inner form: prevent overflow on narrow screens */
+[role="dialog"][aria-modal="true"] input, [role="dialog"][aria-modal="true"] textarea, [role="dialog"][aria-modal="true"] select {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+[role="dialog"][aria-modal="true"] pre, [role="dialog"][aria-modal="true"] code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Sidebar & module pages — responsive hardening (desktop + mobile)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Desktop sidebar: allow shrink on narrow desktop windows
+   (upstream pins min 360px which overflows windows < 900px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  aside[aria-label] {
+    min-width: 0 !important;
+    max-width: 34% !important;
+  }
+}
+
+/* Sidebar text: no overflow with long conversation titles */
+#chat-history-nav a, #chat-history-nav [role="listitem"] {
+  min-width: 0;
+}
+#chat-history-nav a span, #chat-history-nav a div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+/* Mobile drawer: never exceed viewport; internal scroll works */
+@media (max-width: 768px) {
+  #mobile-drawer {
+    max-width: 100vw;
+    overscroll-behavior: contain;
+  }
+  /* Chat pane keeps padding clear of edges */
+  main, #chat-container {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+/* Settings dialog modules (tabs content): fluid on mobile */
+@media (max-width: 768px) {
+  [data-headlessui-state] [role="tabpanel"],
+  [role="tabpanel"] {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  /* Tab sidebar stacked list: horizontal scroll fallback */
+  [role="dialog"][aria-modal="true"] .flex.min-h-0.flex-col {
+    max-width: 100%;
+  }
+  /* Long strings (emails, keys) wrap instead of overflow */
+  [role="dialog"][aria-modal="true"] td,
+  [role="dialog"][aria-modal="true"] code,
+  [role="dialog"][aria-modal="true"] .break-words {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Desktop: message column readable on ultra-wide, no stretch */
+@media (min-width: 1400px) {
+  main [class*="mx-auto"] {
+    max-width: 56rem;
+  }
+}
+
+/* Module pages tables/grids (bookmarks, prompts, skills, memories): */
+.grid {
+  min-width: 0;
+}
+table {
+  max-width: 100%;
+}
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Aries brand: constrain auth logo to header height, centered, no overflow (desktop & mobile) */
+.auth-layout-logo {
+  height: 2.5rem;
+  width: auto;
+  max-width: 12rem;
+  margin-inline: auto;
+  display: block;
+}

@@ -1,0 +1,40 @@
+import { useRecoilState } from 'recoil';
+import { Button, CheckboxGlyph } from '@aries/client';
+import { useLocalize } from '~/hooks';
+import { cn } from '~/utils';
+import store from '~/store';
+
+export default function AutoSendPrompt({
+  onCheckedChange,
+}: {
+  onCheckedChange?: (value: boolean) => void;
+}) {
+  const [autoSendPrompts, setAutoSendPrompts] = useRecoilState<boolean>(store.autoSendPrompts);
+  const localize = useLocalize();
+
+  const handleCheckedChange = (value: boolean) => {
+    setAutoSendPrompts(value);
+    if (onCheckedChange) {
+      onCheckedChange(value);
+    }
+  };
+
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      onClick={() => handleCheckedChange(!autoSendPrompts)}
+      aria-label={localize('com_nav_auto_send_prompts')}
+      aria-pressed={autoSendPrompts}
+      className={cn(
+        'relative h-9 w-full font-medium',
+        autoSendPrompts && 'bg-surface-hover hover:bg-surface-hover',
+      )}
+    >
+      {/* The button owns the state through `aria-pressed`; this is the mark, not a
+          second control inside it. */}
+      <CheckboxGlyph checked={autoSendPrompts} />
+      {localize('com_nav_auto_send_prompts')}
+    </Button>
+  );
+}

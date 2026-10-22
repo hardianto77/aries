@@ -1,0 +1,16 @@
+{{- if .Values.aries.imageVolume.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "aries.fullname" $ }}-images
+spec:
+  accessModes:
+    - {{ .Values.aries.imageVolume.accessModes }}
+{{- if .Values.aries.imageVolume.storageClassName }}
+  storageClassName: {{ .Values.aries.imageVolume.storageClassName }}
+{{- end }}          
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.aries.imageVolume.size }}
+{{- end }}

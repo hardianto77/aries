@@ -1,0 +1,4 @@
+
+{{ if hasKey .Values.env }}
+  {{ fail "The Value env has been renamed and moved to aries.configEnv. Refer to https://www.aries.ai/docs/local/helm_chart#migrate for more information" }}
+{{ end }}
