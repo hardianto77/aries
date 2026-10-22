@@ -269,19 +269,19 @@ jobs:
         run: npm ci
 
       - name: Download data-provider build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-data-provider
           path: packages/data-provider/dist
 
       - name: Download client-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-client-package
           path: packages/client/dist
 
       - name: Download chat-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-chat-package
           path: packages/chat/dist
@@ -326,13 +326,13 @@ jobs:
         run: npm ci
 
       - name: Download data-provider build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-data-provider
           path: packages/data-provider/dist
 
       - name: Download client-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-client-package
           path: packages/client/dist
@@ -383,7 +383,7 @@ jobs:
         run: npm ci
 
       - name: Download data-provider build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-data-provider
           path: packages/data-provider/dist
@@ -466,19 +466,19 @@ jobs:
         run: npm ci
 
       - name: Download data-provider build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-data-provider
           path: packages/data-provider/dist
 
       - name: Download client-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-client-package
           path: packages/client/dist
 
       - name: Download chat-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-chat-package
           path: packages/chat/dist
@@ -549,19 +549,19 @@ jobs:
         run: npm ci
 
       - name: Download data-provider build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-data-provider
           path: packages/data-provider/dist
 
       - name: Download client-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-client-package
           path: packages/client/dist
 
       - name: Download chat-package build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-chat-package
           path: packages/chat/dist
