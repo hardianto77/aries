@@ -1,0 +1,66 @@
+version: 1.2.1
+cache: true
+fileStrategy: "local"
+interfaces:
+  agent: true
+  regenerate: true
+  preset: true
+  parameters: true
+  sidePanel:
+    agentPanel: true
+    bookmarks: true
+    prompts: true
+    memories: true
+endpoints:
+  custom:
+    - name: "9Router"
+      apiKey: "sk-c147d5066637df01-e394we-d12d61dc"
+      baseURL: "https://9router.hardianto.my.id/v1"
+      models:
+        default:
+          - "Ra/claude-opus-5.5"
+          - "Ra/claude-opus-5"
+          - "Ra/claude-sonnet-5"
+          - "Ra/claude-fable-5.1"
+          - "Ra/gemini-3.1-pro"
+          - "Ra/gemini-3.7-flash"
+          - "Ra/gpt-5.6-sol"
+          - "Ra/gpt-5.6-terra"
+          - "Ra/gpt-5.5-pro"
+          - "Ra/grok-4.6"
+          - "Ra/deepseek-v4-pro-max"
+          - "Ra/kimi-k3"
+          - "Ra/qwen3.8-max"
+          - "Ra/glm-5.3"
+        fetch: false
+      titleConvo: true
+      titleModel: "Ra/gemini-3.7-flash"
+      promptPrefix: "You are Aries, an advanced AI workspace assistant. You excel at deep research, software engineering, UI/UX design, and structured problem solving. Be accurate, cite sources when possible, and never fabricate facts."
+
+    - name: "Aries (Open Source)"
+      apiKey: "sk-c147d5066637df01-e394we-d12d61dc"
+      baseURL: "https://9router.hardianto.my.id/v1"
+      models:
+        default:
+          - "Ra/qwen3.8-max"
+          - "Ra/deepseek-v4-pro-max"
+          - "Ra/kimi-k3"
+          - "Ra/glm-5.3"
+          - "Ra/qwen3.8-27b"
+          - "Ra/deepseek-v4-pro-0813"
+          - "Ra/deepseek-v4-flash-0731"
+          - "Ra/kimi-k2.6"
+          - "Ra/glm-5.2"
+          - "Ra/qwen3.7-max"
+          - "Ra/gemma-2-2b"
+        fetch: false
+      titleConvo: true
+      titleModel: "Ra/qwen3.8-27b"
+      promptPrefix: >-
+        You are Aries, an open-source AI assistant powered by community models
+        (Qwen, DeepSeek, Kimi, GLM, Gemma). You excel at knowledge & research,
+        coding, UI/UX design, and structured problem solving. Be accurate and
+        never fabricate facts; say when you are unsure.
+      customParams:
+        max_tokens: 8192
+
