@@ -81,7 +81,7 @@ function PerchPanelSwitcher({
             'text-text-secondary hover:text-text-primary ml-auto h-7 shrink-0 gap-0.5 rounded-lg px-1.5 text-xs font-medium',
           )}
         >
-          <span className="max-w-[7rem] truncate">{localize(activeLink.title)}</span>
+          
           <ChevronDown className="size-3.5 shrink-0" aria-hidden="true" />
         </Ariakit.MenuButton>
       }
