@@ -60,7 +60,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -76,7 +76,7 @@ jobs:
 
       - name: Restore data-provider build cache
         id: cache-data-provider
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/data-provider/dist
           key: build-data-provider-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json') }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: Restore data-schemas build cache
         id: cache-data-schemas
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/data-schemas/dist
           key: build-data-schemas-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/data-schemas/src/**', 'packages/data-schemas/tsconfig*.json', 'packages/data-schemas/tsdown.config.mjs', 'packages/data-schemas/package.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json') }}
@@ -98,7 +98,7 @@ jobs:
 
       - name: Restore api build cache
         id: cache-api
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/api/dist
           key: build-api-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/api/src/**', 'packages/api/tsconfig*.json', 'packages/api/tsdown.config.mjs', 'packages/api/package.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json', 'packages/data-schemas/src/**', 'packages/data-schemas/tsconfig*.json', 'packages/data-schemas/tsdown.config.mjs', 'packages/data-schemas/package.json') }}
@@ -269,7 +269,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -338,7 +338,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -384,7 +384,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -431,7 +431,7 @@ jobs:
       # this download. restore-keys keeps the previous binary warm across lockfile churn; a
       # genuinely new binary version downloads once and re-saves.
       - name: Cache MongoDB memory-server binaries
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/mongodb-binaries
           key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -494,7 +494,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -521,7 +521,7 @@ jobs:
       # this download. restore-keys keeps the previous binary warm across lockfile churn; a
       # genuinely new binary version downloads once and re-saves.
       - name: Cache MongoDB memory-server binaries
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/mongodb-binaries
           key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -579,7 +579,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -612,7 +612,7 @@ jobs:
       # this download. restore-keys keeps the previous binary warm across lockfile churn; a
       # genuinely new binary version downloads once and re-saves.
       - name: Cache MongoDB memory-server binaries
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/mongodb-binaries
           key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -678,7 +678,7 @@ jobs:
 
       - name: Restore node_modules cache
         id: cache-node-modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             node_modules
@@ -717,7 +717,7 @@ jobs:
       # this download. restore-keys keeps the previous binary warm across lockfile churn; a
       # genuinely new binary version downloads once and re-saves.
       - name: Cache MongoDB memory-server binaries
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/mongodb-binaries
           key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
