@@ -29,7 +29,7 @@ jobs:
     env:
       E2E_CHROMIUM_CHANNEL: chrome
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v5
         with:
           node-version: '24.16.0'
