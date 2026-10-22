@@ -344,7 +344,7 @@ jobs:
         if: always() && steps.paths.outputs.config == 'true'
         id: cache-data-provider
         continue-on-error: true
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/data-provider/dist
           key: build-data-provider-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json') }}
@@ -359,7 +359,7 @@ jobs:
         if: always() && steps.paths.outputs.config == 'true'
         id: cache-data-schemas
         continue-on-error: true
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/data-schemas/dist
           key: build-data-schemas-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/data-schemas/src/**', 'packages/data-schemas/tsconfig*.json', 'packages/data-schemas/tsdown.config.mjs', 'packages/data-schemas/package.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json') }}
@@ -374,7 +374,7 @@ jobs:
         if: always() && steps.paths.outputs.config == 'true'
         id: cache-api
         continue-on-error: true
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/api/dist
           key: build-api-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'packages/api/src/**', 'packages/api/tsconfig*.json', 'packages/api/tsdown.config.mjs', 'packages/api/package.json', 'packages/data-provider/src/**', 'packages/data-provider/tsconfig*.json', 'packages/data-provider/tsdown.config.mjs', 'packages/data-provider/package.json', 'packages/data-schemas/src/**', 'packages/data-schemas/tsconfig*.json', 'packages/data-schemas/tsdown.config.mjs', 'packages/data-schemas/package.json') }}
